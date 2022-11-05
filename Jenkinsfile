@@ -34,6 +34,16 @@ pipeline {
                 }
             }
         }
+        stage("Paso 4: Spring-boot run"){
+            steps {
+                script {
+                sh "echo 'Spring-boot run'"
+                // Run Maven on a Unix agent.
+                // nohup bash mvnw.cmd spring-boot:run &
+                sh "./mvnw.cmd spring-boot:run"
+                }
+            }
+        }
     }
     post {
         always {
