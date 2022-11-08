@@ -48,7 +48,10 @@ pipeline {
             steps {
                 script {
                 sh "echo 'Testing Application'"
-                sh "curl -X GET 'http://172.17.0.2:8081/rest/mscovid/test?msg=testing'"
+                retry(3){
+                    sleep(60)
+                    sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+                }
                 }
             }
         }
