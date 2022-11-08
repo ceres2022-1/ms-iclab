@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                 sh "echo 'Testing Application'"
-                sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+                sh "curl -X GET 'http://79ff-181-42-22-70.ngrok.io:8081/rest/mscovid/test?msg=testing'"
                 }
             }
         }
