@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                 sh "echo 'Testing Application'"
-                sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+                sh "curl -X GET 'http://localhost:50000/rest/mscovid/test?msg=testing'"
                 }
             }
         }
