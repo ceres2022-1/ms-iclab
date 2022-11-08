@@ -39,8 +39,8 @@ pipeline {
                 script {
                 sh "echo 'spring-boot run'"
                 // Run Maven on a Unix agent.
-                sh "nohup bash mvnw spring-boot:run &"
-                //sh "./mvnw spring-boot:run"
+                //sh "nohup bash mvnw spring-boot:run &"
+                sh "./mvnw spring-boot:run"
                 }
             }
         }
