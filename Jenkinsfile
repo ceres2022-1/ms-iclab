@@ -39,8 +39,8 @@ pipeline {
                 script {
                 sh "echo 'spring-boot run'"
                 // Run Maven on a Unix agent.
-                //sh "nohup bash mvnw spring-boot:run &"
-                sh "./mvnw spring-boot:run"
+                sh "nohup bash mvnw spring-boot:run &"
+                //sh "./mvnw spring-boot:run"
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                 sh "echo 'Testing Application'"
-                sh "curl -X GET 'http://79ff-181-42-22-70.ngrok.io:8081/rest/mscovid/test?msg=testing'"
+                sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
                 }
             }
         }
