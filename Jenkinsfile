@@ -47,7 +47,7 @@ pipeline {
         stage("Paso 5: Testing App"){
             steps {
                 script {
-                sh "echo 'Testing Application'"
+                sh "echo 'Testing Application!'"
                 retry(3){
                     sleep(60)
                     sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
