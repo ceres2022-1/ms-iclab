@@ -10,6 +10,7 @@ pipeline {
         stage('Paso 1: Compliar') {
             steps {
                 script {
+                    env.channel='C04B17VE0JH'
                     env.STAGE='Paso 1: Compliar'
                     sh "echo 'Compile Code!'"
                     // Run Maven on a Unix agent.
@@ -47,18 +48,18 @@ pipeline {
                 }
             }
         }
-        // stage('Paso 5: Análisis SonarQube') {
-        //     steps {
-        //         script {
-        //             env.STAGE='Paso 5: Análisis SonarQube'
-        //         }
-        //         withSonarQubeEnv('sonarqube') {
-        //             sh "echo 'Calling sonar Service in another docker container!'"
-        //             // Run Maven on a Unix agent to execute Sonar.
-        //             sh './mvnw clean verify sonar:sonar -Dsonar.projectKey=lab-m4-equipo1 -Dsonar.projectName=lab-m4-equipo1'
-        //         }
-        //     }
-        // }
+        stage('Paso 5: Análisis SonarQube') {
+            steps {
+                script {
+                    env.STAGE='Paso 5: Análisis SonarQube'
+                }
+                withSonarQubeEnv('sonarqube') {
+                    sh "echo 'Calling sonar Service in another docker container!'"
+                    // Run Maven on a Unix agent to execute Sonar.
+                    sh './mvnw clean verify sonar:sonar -Dsonar.projectKey=lab-m4-equipo1 -Dsonar.projectName=lab-m4-equipo1'
+                }
+            }
+        }
         stage('Paso 6: Subir Artefacto a Nexus') {
             steps {
                 script {
@@ -93,13 +94,13 @@ pipeline {
             slackSend color: 'good',
             message: "[Grupo 1] [${JOB_NAME}] [Rama: [${env.BRANCH_NAME}]] [Stage: [${env.STAGE}]] [Resultado: Éxito/Success]", 
             teamDomain: 'devopsusach20-lzc3526', 
-            tokenCredentialId: 'token-slack'
+            channel: "${env.channel}"
         }
         failure {
             slackSend color: 'danger',
             message: "[Grupo 1] [${JOB_NAME}] [Rama: [${env.BRANCH_NAME}]] [Stage: [${env.STAGE}]] [Resultado: Error/Fail]", 
             teamDomain: 'devopsusach20-lzc3526',
-            tokenCredentialId: 'token-slack'
+            channel: "${env.channel}"
         }
     }
 }
