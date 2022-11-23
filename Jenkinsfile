@@ -10,6 +10,7 @@ pipeline {
         stage('Paso 1: Compliar') {
             steps {
                 script {
+                    env.STAGE='Paso 1: Compliar'
                     sh "echo 'Compile Code!'"
                     // Run Maven on a Unix agent.
                     sh './mvnw clean compile -e'
@@ -19,6 +20,7 @@ pipeline {
         stage('Paso 2: Testear') {
             steps {
                 script {
+                    env.STAGE='Paso 2: Testear'
                     sh "echo 'Test Code!'"
                     // Run Maven on a Unix agent.
                     sh './mvnw clean test -e'
@@ -28,6 +30,7 @@ pipeline {
         stage('Paso 3: Build .Jar') {
             steps {
                 script {
+                    env.STAGE='Paso 3: Build .Jar'
                     sh "echo 'Build .Jar!'"
                     // Run Maven on a Unix agent.
                     sh './mvnw clean package -e'
@@ -37,6 +40,7 @@ pipeline {
         stage('Paso 4: Spring-boot run') {
             steps {
                 script {
+                    env.STAGE='Paso 4: Spring-boot run'
                     sh "echo 'spring-boot run'"
                     // Run Maven on a Unix agent.
                     sh 'nohup bash mvnw spring-boot:run &'
@@ -45,6 +49,9 @@ pipeline {
         }
         stage('Paso 5: Análisis SonarQube') {
             steps {
+                script {
+                    env.STAGE='Paso 5: Análisis SonarQube'
+                }
                 withSonarQubeEnv('sonarqube') {
                     sh "echo 'Calling sonar Service in another docker container!'"
                     // Run Maven on a Unix agent to execute Sonar.
@@ -52,9 +59,10 @@ pipeline {
                 }
             }
         }
-         stage("Paso 6: Subir Artefacto a Nexus"){
+        stage('Paso 6: Subir Artefacto a Nexus') {
             steps {
-                script{
+                script {
+                    env.STAGE='Paso 6: Subir Artefacto a Nexus'
                     nexusPublisher nexusInstanceId: 'nexus',
                         nexusRepositoryId: 'maven-usach-ceres',
                         packages: [
@@ -82,11 +90,16 @@ pipeline {
             sh "echo 'fase always executed post'"
         }
         success {
-            sh "echo 'fase success'"
+            slackSend color: 'good',
+            message: "[Grupo 1] [${JOB_NAME}] [Rama: [${BRANCH_NAME}]] [Stage: [${env.STAGE}]] [Resultado: Éxito/Success]", 
+            teamDomain: 'devopsusach20-lzc3526', 
+            tokenCredentialId: 'token-slack'
         }
-
         failure {
-            sh "echo 'fase failure'"
+            slackSend color: 'danger',
+            message: "[Grupo 1] [${JOB_NAME}] [Rama: [${BRANCH_NAME}]] [Stage: [${env.STAGE}]] [Resultado: Error/Fail]", 
+            teamDomain: 'devopsusach20-lzc3526',
+            tokenCredentialId: 'token-slack'
         }
     }
 }
