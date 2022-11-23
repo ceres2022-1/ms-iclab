@@ -40,22 +40,16 @@ pipeline {
                 sh "echo 'spring-boot run'"
                 // Run Maven on a Unix agent.
                 sh "nohup bash mvnw spring-boot:run &"
-                //sh "./mvnw spring-boot:run"
                 }
             }
         }
-        stage("Paso 5: Testing App"){
+        stage("Paso 5: Análisis SonarQube"){
             steps {
-                script {
-                sh "echo 'Testing Application!!'"
-                retry(3){
-                    sleep(60)
-                    sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
-                    sh "curl -X GET 'http://localhost:8081/rest/mscovid/estadoPais?pais=Chile'"
-                    sh "curl -X GET 'http://localhost:8081/rest/mscovid/estadoMundial'"
+                withSonarQubeEnv('sonarqube') {
+                    sh "echo 'Calling sonar Service in another docker container!'"
+                    // Run Maven on a Unix agent to execute Sonar.
+                    sh './mvnw clean verify sonar:sonar -Dsonar.projectKey=lab-m4-equipo1 -Dsonar.projectName=lab-m4-equipo1'
                 }
-                }
-            }
         }
     }
     post {
