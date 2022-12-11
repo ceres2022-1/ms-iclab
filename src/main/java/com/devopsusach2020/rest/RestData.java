@@ -78,4 +78,11 @@ public class RestData {
 			response.setTotalRecovered(estado.getTotalRecovered());
 			return response;
 	}
+
+	public boolean validaApiCovid() {
+		LOGGER.log(Level.INFO, "Validando Api Covid");
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> call = restTemplate.getForEntity("https://api.covid19api.com", String.class);
+		return call.getStatusCode().is2xxSuccessful();
+	}
 }
