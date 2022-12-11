@@ -69,16 +69,18 @@ public class RestData {
 	}
 
 	@GetMapping(path = "/estadoMundial", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Mundial getTotalMundial() {
-		LOGGER.log(Level.INFO, "Consulta mundial");
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> call = restTemplate.getForEntity("https://api.covid19api.com/world/total", String.class);
+    public @ResponseBody Mundial getTotalMundial(){
 		Mundial response = new Mundial();
-		Gson gson = new Gson();
-		Mundial estado = gson.fromJson(call.getBody().toLowerCase(), Mundial.class);
-		response.setTotalConfirmed(estado.getTotalConfirmed());
-		response.setTotalDeaths(estado.getTotalDeaths());
-		response.setTotalRecovered(estado.getTotalRecovered());
+		if (validaApiCovid()) {
+			LOGGER.log(Level.INFO, "Consulta mundial");
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> call = restTemplate.getForEntity("https://api.covid19api.com/world/total", String.class);
+			Gson gson = new Gson();
+			Mundial estado = gson.fromJson(call.getBody().toLowerCase(), Mundial.class);
+			response.setTotalConfirmed(estado.getTotalConfirmed());
+			response.setTotalDeaths(estado.getTotalDeaths());
+			response.setTotalRecovered(estado.getTotalRecovered());
+		}
 		return response;
 	}
 

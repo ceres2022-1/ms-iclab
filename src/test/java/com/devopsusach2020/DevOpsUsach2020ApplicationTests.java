@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.devopsusach2020.model.Pais;
 import com.devopsusach2020.rest.RestData;
 
+import com.devopsusach2020.model.Mundial;
+
 @SpringBootTest
 class DevOpsUsach2020ApplicationTests {
 
@@ -34,4 +36,12 @@ class DevOpsUsach2020ApplicationTests {
 		assertNotNull(response.getConfirmed());
 		assertNotNull(response.getDeaths());
 	}
+
+	@Test 
+	void testEstadoMundial() {
+		Mundial response = restData.getTotalMundial();
+		assertNotNull(response.getTotalConfirmed());
+		assertNotNull(response.getTotalDeaths());
+	}
+	
 }
