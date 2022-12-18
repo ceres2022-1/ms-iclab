@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "1127a672-12d1-487e-a818-d9ceb375a73b",
+		"name": "ejemplo-maven",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/rest/mscovid/test?msg=usach2022",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"mscovid",
+						"test"
+					],
+					"query": [
+						{
+							"key": "msg",
+							"value": "usach2022"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "estadoPais2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"",
+							"const schemaEstadoPais = {",
+							"    \"deaths\": \"number\",",
+							"    \"confirmed\": \"number\",",
+							"    \"date\": \"string\",",
+							"    \"mensaje\": \"string\",",
+							"    \"country\": \"string\",",
+							"    \"recovered\": \"number\",",
+							"    \"active\": \"number\"",
+							"};",
+							"",
+							"pm.test(\"Validate schema of estadoPais\", () => {",
+							"    pm.response.to.have.jsonSchema(schemaEstadoPais);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/rest/mscovid/estadoPais?pais=ecuador",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"mscovid",
+						"estadoPais"
+					],
+					"query": [
+						{
+							"key": "pais",
+							"value": "ecuador"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "estadoPais",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(10000);",
+							"});",
+							"",
+							"const schemaEstadoPais = {",
+							"    \"deaths\": \"number\",",
+							"    \"confirmed\": \"number\",",
+							"    \"date\": \"string\",",
+							"    \"mensaje\": \"string\",",
+							"    \"country\": \"string\",",
+							"    \"recovered\": \"number\",",
+							"    \"active\": \"number\"",
+							"};",
+							"",
+							"pm.test(\"Validate schema of estadoPais\", () => {",
+							"    pm.response.to.have.jsonSchema(schemaEstadoPais);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/rest/mscovid/estadoPais?pais=argentina",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"rest",
+						"mscovid",
+						"estadoPais"
+					],
+					"query": [
+						{
+							"key": "pais",
+							"value": "argentina"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "estadoMundial",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"",
+							"const schemaEstadoMundial = {",
+							"    \"totalDeaths\": \"number\",",
+							"    \"totalConfirmed\": \"number\",",
+							"    \"totalRecovered\": \"number\",",
+							"};",
+							"",
+							"pm.test(\"Validate schema of estadoPais\", () => {",
+							"    pm.response.to.have.jsonSchema(schemaEstadoMundial);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:8081/rest/mscovid/estadoMundial"
+			},
+			"response": []
+		}
+	]
+}
